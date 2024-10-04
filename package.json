@@ -1,0 +1,51 @@
+{
+  "name": "@empathyco/eslint-config",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "ESLint and Prettier config preset",
+  "author": "Empathy Systems Corporation S.L.",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/empathyco/eslint-config#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/empathyco/eslint-config.git"
+  },
+  "bugs": {
+    "url": "https://github.com/empathyco/eslint-config/issues"
+  },
+  "keywords": [
+    "eslint",
+    "eslintconfig",
+    "prettier",
+    "antfu"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": "^20",
+    "npm": "^10"
+  },
+  "scripts": {
+    "lint": "eslint --flag unstable_ts_config .",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:inspect": "npm run lint -- --inspect-config",
+    "prettier": "prettier --write ."
+  },
+  "peerDependencies": {
+    "eslint": ">= 9.11.0",
+    "prettier": ">= 3.3.0"
+  },
+  "peerDependenciesMeta": {
+    "prettier": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@antfu/eslint-config": "^3.7.3"
+  },
+  "devDependencies": {
+    "eslint": "^9.11.1",
+    "jiti": "^2.1.2",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.2"
+  }
+}
