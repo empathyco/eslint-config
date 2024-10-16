@@ -1,4 +1,4 @@
-import empathyco from './src';
+import { empathyco } from './src';
 
 export default empathyco(
   {},

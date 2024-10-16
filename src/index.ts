@@ -2,7 +2,7 @@ import antfu from '@antfu/eslint-config';
 
 type AntfuParams = Parameters<typeof antfu>;
 
-async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: AntfuParams[1][]) {
+export async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: AntfuParams[1][]) {
   return antfu(
     {
       stylistic: false, // Disable https://eslint.style,
@@ -10,6 +10,7 @@ async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: AntfuPara
       typescript: {
         tsconfigPath: 'tsconfig.json'
       },
+      ignores: ['.loaded_actions'],
       ...options
     },
     {
@@ -30,11 +31,8 @@ async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: AntfuPara
   );
 }
 
-export default empathyco;
-
 /**
  * Pending:
- * Prettier
  * Stylelint?
  * Publish NPM package (GitHub actions)
  */

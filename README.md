@@ -1,16 +1,15 @@
 # @empathyco/eslint-config
 
 - [@antfu/eslint-config](https://github.com/antfu/eslint-config) as default ESLint config preset.
-- [prettier](https://github.com/prettier/prettier) as code formatter sharing config preset.
+- [Prettier](https://github.com/prettier/prettier) as code formatter sharing config preset.
 - [@eslint/config-inspector](https://github.com/eslint/config-inspector) the visual tool for inspecting and understanding your ESLint flat configs.
-- Requires ESLint v9.11.0+
 
 ## Usage
 
 ### Install
 
 ```bash
-npm i -D prettier eslint @empathyco/eslint-config
+npm i -D @empathyco/eslint-config
 ```
 
 And create `eslint.config.mjs` in your project root:
@@ -29,10 +28,11 @@ For example:
 ```json
 {
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "lint:inspect": "eslint . --inspect-config",
-    "prettier": "prettier --write ."
+    "lint": "eslint --fix .",
+    "lint:check": "eslint .",
+    "lint:inspect": "eslint --inspect-config .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   }
 }
 ```
