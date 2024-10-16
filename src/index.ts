@@ -10,21 +10,19 @@ export async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: An
       typescript: {
         tsconfigPath: 'tsconfig.json'
       },
-      ignores: ['.loaded_actions'],
+      ignores: ['.loaded_actions', '*.d.ts'],
       ...options
     },
     {
-      // Example
-      files: ['**/*.spec.{ts,tsx,js,jsx}'],
-      rules: {
-        'ts/explicit-function-return-type': 'off'
-      }
-    },
-    {
-      // Example
       rules: {
         // Disable extra stylistic rules that conflicts with prettier
         'vue/singleline-html-element-content-newline': 'off'
+      }
+    },
+    {
+      files: ['**/*.spec.{ts,tsx,js,jsx}'],
+      rules: {
+        'ts/explicit-function-return-type': 'off'
       }
     },
     ...userConfigs
