@@ -9,14 +9,14 @@
 ### Install
 
 ```bash
-npm i -D @empathyco/eslint-config
+npm i -D eslint @empathyco/eslint-config
 ```
 
 And create `eslint.config.mjs` in your project root:
 
 ```js
 // eslint.config.mjs
-import empathyco from '@empathyco/eslint-config';
+import { empathyco } from '@empathyco/eslint-config';
 
 export default empathyco();
 ```
