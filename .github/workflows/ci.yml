@@ -9,7 +9,7 @@ concurrency:
 
 jobs:
   ci:
-    runs-on: [self-hosted, motive-frontend]
+    runs-on: [self-hosted, x]
     permissions:
       id-token: write
       contents: read
