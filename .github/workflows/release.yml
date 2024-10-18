@@ -9,7 +9,7 @@ concurrency: release
 
 jobs:
   release:
-    runs-on: [self-hosted, experienceai-small]
+    runs-on: [self-hosted, ui, big]
     permissions:
       id-token: write
       contents: read
