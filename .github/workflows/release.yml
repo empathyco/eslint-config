@@ -9,7 +9,7 @@ concurrency: release
 
 jobs:
   release:
-    runs-on: [self-hosted, ui, big]
+    runs-on: [self-hosted, motive-frontend]
     permissions:
       id-token: write
       contents: read
