@@ -9,7 +9,7 @@ concurrency: release
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, experienceai-small]
     permissions:
       id-token: write
       contents: read
