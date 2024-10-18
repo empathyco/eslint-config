@@ -11,7 +11,7 @@ export async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: An
       typescript: {
         tsconfigPath: 'tsconfig.json'
       },
-      ignores: ['.loaded_actions', '*.d.ts'],
+      ignores: ['.loaded_actions'],
       ...options
     },
     {
