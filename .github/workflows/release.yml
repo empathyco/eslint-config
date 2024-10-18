@@ -1,0 +1,120 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    defaults:
+      run:
+        shell: sh
+
+    steps:
+      - name: Generate a token
+        id: app-token
+        uses: actions/create-github-app-token@5d869da34e18e7287c1daad50e0b8ea0f506ce69 # v1
+        with:
+          app-id: ${{ vars.GH_TOKENS_APP_ID }}
+          private-key: ${{ secrets.GH_TOKENS_APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4
+        with:
+          ref: refs/heads/main
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0
+
+      - name: Load Motive Shared Actions
+        uses: daspn/private-actions-checkout@v2
+        with:
+          app_id: ${{ secrets.MOTIVE_PRIVATE_ACTIONS_APP_ID }}
+          app_private_key: ${{ secrets.MOTIVE_PRIVATE_ACTIONS_APP_PRIVATE_KEY }}
+          configure_git: true
+          actions_list: '[ "empathyco/platform-motive-ci-library@v5" ]'
+          checkout_base_path: ./.loaded_actions/actions
+
+      - uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Setup CACHE
+        id: cache
+        uses: ./.loaded_actions/actions/platform-motive-ci-library/node/cache
+        with:
+          PREFIX_CACHE_KEY: ${{ runner.os }}
+          NODE_MODULES: 'true'
+          NPM: 'true'
+          CUSTOM_CACHE: 'false'
+
+      - name: Increment and set new version
+        id: increment
+        uses: ./.loaded_actions/actions/platform-motive-ci-library/motive/increment-version
+        with:
+          PROJECT_TYPE: node
+          RELEASED_VERSION_SOURCE: tag
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache_node_modules != 'true'
+        run: npm ci
+
+      - name: Prettier
+        run: npm run format
+
+      - name: Linter
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Commit & push changes
+        if: steps.increment.outputs.previous != steps.increment.outputs.version
+        env:
+          GIT_AUTHOR_NAME: GitHub Version
+          GIT_AUTHOR_EMAIL: 'github-actions[bot]@users.noreply.github.com'
+        run: |
+          git config --global user.name "${GIT_AUTHOR_NAME}"
+          git config --global user.email "${GIT_AUTHOR_EMAIL}"
+          git add package.json package-lock.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore(version): bump version: ${{ steps.increment.outputs.version }}" -m "[skip ci]"
+          git pull --strategy-option=theirs origin main --no-edit --no-rebase
+          git push origin main
+
+      - name: Generate tag name
+        id: tag
+        if: steps.increment.outputs.previous != steps.increment.outputs.version
+        run: |
+          echo "name=v${{steps.increment.outputs.version}}" >> $GITHUB_OUTPUT
+
+      - name: Install GH CLI
+        if: steps.tag.outputs.name != ''
+        uses: dev-hanz-ops/install-gh-cli-action@8fff9050dae2d81b38f94500d8b74ad1d1d47410 # v0.2.0
+        with:
+          gh-cli-version: 2.49.2
+
+      - name: Create version tag
+        if: steps.tag.outputs.name != ''
+        run: |
+          HEAD_TAG=$(git tag -l | grep -v "v*" | sort -V | tail -2 | head -1)
+          git tag -a "${{steps.tag.outputs.name}}" -m "release version ${{steps.tag.outputs.name}}"
+          git push origin "${{steps.tag.outputs.name}}"
+          gh release create ${{st4eps.tag.outputs.name}} --generate-notes --notes-start-tag $HEAD_TAG
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+
+      - name: Configure NPM auth
+        run: |
+          npm config set registry="https://registry.npmjs.org/"
+          npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN_GRANULAR_ACCESS }}
+
+      - name: Publish package
+        run: npm publish
