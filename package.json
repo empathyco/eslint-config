@@ -1,7 +1,7 @@
 {
   "name": "@empathyco/eslint-config",
   "type": "module",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "ESLint and Prettier config preset",
   "author": "Empathy Systems Corporation S.L.",
   "license": "Apache-2.0",
