@@ -93,7 +93,7 @@ jobs:
           HEAD_TAG=$(git tag -l | grep -v "v*" | sort -V | tail -2 | head -1)
           git tag -a "${{steps.tag.outputs.name}}" -m "release version ${{steps.tag.outputs.name}}"
           git push origin "${{steps.tag.outputs.name}}"
-          gh release create ${{st4eps.tag.outputs.name}} --generate-notes --notes-start-tag $HEAD_TAG
+          gh release create ${{steps.tag.outputs.name}} --generate-notes --notes-start-tag $HEAD_TAG
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
