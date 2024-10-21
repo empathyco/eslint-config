@@ -9,7 +9,7 @@ concurrency: release
 
 jobs:
   release:
-    runs-on: [self-hosted, x]
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
@@ -32,34 +32,21 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
 
-      - name: Load Motive Shared Actions
-        uses: daspn/private-actions-checkout@v2
-        with:
-          app_id: ${{ secrets.MOTIVE_PRIVATE_ACTIONS_APP_ID }}
-          app_private_key: ${{ secrets.MOTIVE_PRIVATE_ACTIONS_APP_PRIVATE_KEY }}
-          configure_git: true
-          actions_list: '[ "empathyco/platform-motive-ci-library@v5" ]'
-          checkout_base_path: ./.loaded_actions/actions
-
       - uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
         with:
           node-version-file: .nvmrc
 
-      - name: Setup CACHE
+      - name: Setup Node cache
         id: cache
-        uses: ./.loaded_actions/actions/platform-motive-ci-library/node/cache
+        uses: ./.github/actions/cache
         with:
           PREFIX_CACHE_KEY: ${{ runner.os }}
           NODE_MODULES: 'true'
           NPM: 'true'
-          CUSTOM_CACHE: 'false'
 
       - name: Increment and set new version
         id: increment
-        uses: ./.loaded_actions/actions/platform-motive-ci-library/motive/increment-version
-        with:
-          PROJECT_TYPE: node
-          RELEASED_VERSION_SOURCE: tag
+        uses: ./.github/actions/increment-version
 
       - name: Install dependencies
         if: steps.cache.outputs.cache_node_modules != 'true'
