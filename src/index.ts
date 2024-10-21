@@ -33,6 +33,5 @@ export async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: An
 
 /**
  * Pending:
- * Stylelint?
- * Publish NPM package (GitHub actions)
+ * Stylelint
  */
