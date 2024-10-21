@@ -17,7 +17,7 @@
 ### Install
 
 ```bash
-npm i -D eslint @empathyco/eslint-config
+npm i -D @empathyco/eslint-config
 ```
 
 ### ESLint config
