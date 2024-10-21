@@ -2,17 +2,17 @@ name: Increment Version
 
 outputs:
   version:
-    description: "New version"
+    description: New version
     value: ${{ steps.project.outputs.version }}
   previous:
-    description: "Old version"
+    description: Old version
     value: ${{ steps.project.outputs.previous }}
 
 runs:
   using: composite
 
   steps:
-    - name: 'Increment version'
+    - name: Increment version
       id: project
       shell: sh
       run: ${GITHUB_ACTION_PATH}/increment-version.sh

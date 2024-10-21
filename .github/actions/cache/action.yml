@@ -1,37 +1,37 @@
 name: Getting Cache
-description: 'Composite action to share cache fetching between workflows'
+description: Composite action to share cache fetching between workflows
 
 inputs:
   PREFIX_CACHE_KEY:
-    description: 'Supported string values. Used as prefix to generate a cache key'
+    description: Supported string values. Used as prefix to generate a cache key
     required: false
   NODE_MODULES:
-    description: 'Supported boolean values. Used to know if should manage the NODE MODULES cache'
+    description: Supported boolean values. Used to know if should manage the NODE MODULES cache
     required: false
   NPM:
-    description: 'Supported boolean values. Used to know if should manage the NPM cache'
+    description: Supported boolean values. Used to know if should manage the NPM cache
     required: false
 
 outputs:
   cache_node_modules:
-    description: 'Used to know if exist a NODE_MODULES cache'
+    description: Used to know if exist a NODE_MODULES cache
     value: ${{ steps.cache_node_modules.outputs.cache-hit }}
 
 runs:
   using: composite
 
   steps:
-    - name: 'Set unify package version'
+    - name: Set unify package version
       id: package
       shell: sh
       run: npm version -no-git-tag-version 0.0.0
 
-    - name: 'Get NPM cache directory path'
+    - name: Get NPM cache directory path
       id: cache_path
       shell: sh
       run: echo dir=$(npm config get cache) >> $GITHUB_OUTPUT
 
-    - name: 'Get cache NODE MODULES dependencies'
+    - name: Get cache NODE MODULES dependencies
       id: cache_node_modules
       if: inputs.NODE_MODULES == 'true'
       uses: actions/cache@v4
@@ -39,7 +39,7 @@ runs:
         path: ./node_modules
         key: ${{ inputs.PREFIX_CACHE_KEY }}-node_modules-${{ hashFiles('**/package-lock.json') }}
 
-    - name: 'Get cache NPM dependencies'
+    - name: Get cache NPM dependencies
       id: cache_npm
       if: inputs.NPM == 'true' && steps.cache_node_modules.outputs.cache-hit != 'true'
       uses: actions/cache@v4
@@ -52,6 +52,6 @@ runs:
           ${{ inputs.PREFIX_CACHE_KEY }}-npm-
           ${{ inputs.PREFIX_CACHE_KEY }}-
 
-    - name: 'Undo package version changes'
+    - name: Undo package version changes
       shell: sh
       run: git checkout -- .

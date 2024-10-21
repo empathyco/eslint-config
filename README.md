@@ -61,7 +61,7 @@ This is a script set that you can add to your repository:
 
 Configure the initial preset with the same parameters as expose [@antfu/eslint-config](https://github.com/antfu/eslint-config/blob/main/README.md#customization)
 
-Example: 
+Example:
 
 ```js
 import { empathyco } from '@empathyco/eslint-config';
