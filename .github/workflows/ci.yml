@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    defaults:
+      run:
+        shell: sh
+
+    steps:
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4
+
+      - name: Set Node version
+        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Setup Node cache
+        id: cache
+        uses: ./.github/actions/cache
+        with:
+          PREFIX_CACHE_KEY: ${{ runner.os }}
+          NODE_MODULES: 'true'
+          NPM: 'true'
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache_node_modules != 'true'
+        run: npm ci
+
+      - name: Prettier
+        run: npm run format
+
+      - name: Linter
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
