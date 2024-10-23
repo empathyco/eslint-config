@@ -7,7 +7,7 @@ export async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: An
     {
       stylistic: false, // Disable https://eslint.style,
       formatters: false, // https://github.com/antfu/eslint-config?tab=readme-ov-file#prettier
-      vue: true,
+      vue: true, // To be able to tweak vue rules here
       typescript: {
         tsconfigPath: 'tsconfig.json'
       },
@@ -17,7 +17,7 @@ export async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: An
     {
       rules: {
         'vue/block-order': ['error', { order: ['template', 'script', 'style'] }],
-        // Disable extra stylistic rules that conflicts with prettier
+        // Disable extra stylistic rules that conflicts with Prettier
         'vue/singleline-html-element-content-newline': 'off'
       }
     },
@@ -30,8 +30,3 @@ export async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: An
     ...userConfigs
   );
 }
-
-/**
- * Pending:
- * Stylelint
- */
