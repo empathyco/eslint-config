@@ -96,7 +96,7 @@ jobs:
 
       - name: Create release
         if: steps.tag.outputs.name != ''
-        run: gh release create ${{steps.tag.outputs.name}} --generate-notes --notes-start-tag $(git tag -l "v*.*" | sort -V | tail -2 | head -1)
+        run: gh release create ${{steps.tag.outputs.name}} --generate-notes --notes-start-tag $(git tag -l "v*.*.*" | sort -V | tail -2 | head -1)
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
