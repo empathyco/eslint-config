@@ -26,9 +26,7 @@
       "require": "./dist/index.cjs"
     },
     "./prettier": {
-      "types": "./dist/prettier.config.d.ts",
-      "import": "./dist/prettier.config.js",
-      "require": "./dist/prettier.config.cjs"
+      "default": "./dist/prettier.config.js"
     }
   },
   "main": "./dist/index.cjs",
@@ -39,7 +37,7 @@
     "package.json"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --clean --dts && tsup prettier.config.js --format esm,cjs",
+    "build": "tsup src/index.ts --format esm,cjs --clean --dts && tsup prettier.config.js --format esm",
     "lint": "eslint --flag unstable_ts_config --fix .",
     "lint:check": "eslint --flag unstable_ts_config .",
     "lint:inspect": "eslint --flag unstable_ts_config --inspect-config .",
