@@ -16,6 +16,7 @@ export async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: An
     },
     {
       rules: {
+        'vue/block-order': ['error', { order: ['template', 'script', 'style'] }],
         // Disable vue rules that conflicts with Prettier
         'vue/singleline-html-element-content-newline': 'off',
         'vue/html-self-closing': 'off'
