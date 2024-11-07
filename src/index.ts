@@ -1,6 +1,6 @@
-import antfu from '@antfu/eslint-config';
+import antfu from '@antfu/eslint-config'
 
-type AntfuParams = Parameters<typeof antfu>;
+type AntfuParams = Parameters<typeof antfu>
 
 export async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: AntfuParams[1][]) {
   return antfu(
@@ -9,25 +9,25 @@ export async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: An
       formatters: false, // https://github.com/antfu/eslint-config?tab=readme-ov-file#prettier
       vue: true, // To be able to tweak vue rules here
       typescript: {
-        tsconfigPath: 'tsconfig.json'
+        tsconfigPath: 'tsconfig.json',
       },
       ignores: ['.loaded_actions'],
-      ...options
+      ...options,
     },
     {
       rules: {
         'vue/block-order': ['error', { order: ['template', 'script', 'style'] }],
         // Disable vue rules that conflicts with Prettier
         'vue/singleline-html-element-content-newline': 'off',
-        'vue/html-self-closing': 'off'
-      }
+        'vue/html-self-closing': 'off',
+      },
     },
     {
       files: ['**/*.spec.{ts,tsx,js,jsx}'],
       rules: {
-        'ts/explicit-function-return-type': 'off'
-      }
+        'ts/explicit-function-return-type': 'off',
+      },
     },
-    ...userConfigs
-  );
+    ...userConfigs,
+  )
 }

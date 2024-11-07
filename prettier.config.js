@@ -3,6 +3,6 @@ const config = {
   singleQuote: true,
   arrowParens: 'avoid',
   semi: false,
-};
+}
 
-export default config;
+export default config

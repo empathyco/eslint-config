@@ -26,9 +26,9 @@ Create `eslint.config.mjs` in your project root:
 
 ```js
 // eslint.config.mjs
-import { empathyco } from '@empathyco/eslint-config';
+import { empathyco } from '@empathyco/eslint-config'
 
-export default empathyco();
+export default empathyco()
 ```
 
 ### Prettier config
@@ -64,7 +64,7 @@ Configure the initial preset with the same parameters as expose [@antfu/eslint-c
 Example:
 
 ```js
-import { empathyco } from '@empathyco/eslint-config';
+import { empathyco } from '@empathyco/eslint-config'
 
 export default empathyco(
   // Configures for empathyco's (antfu) config.
@@ -73,14 +73,14 @@ export default empathyco(
   // You can have multiple configs.
   {
     rules: {
-      'vue/custom-event-name-casing': 'off'
-    }
+      'vue/custom-event-name-casing': 'off',
+    },
   },
   {
     files: ['**/*.spec.{ts,tsx,js,jsx}'],
     rules: {
-      'jsdoc/check-param-names': 'off'
-    }
-  }
-);
+      'jsdoc/check-param-names': 'off',
+    },
+  },
+)
 ```
