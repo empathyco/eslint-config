@@ -20,6 +20,7 @@ export async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: An
         // Disable vue rules that conflicts with Prettier
         'vue/singleline-html-element-content-newline': 'off',
         'vue/html-self-closing': 'off',
+        'vue/html-indent': 'off',
         // https://typescript-eslint.io/rules/strict-boolean-expressions/
         '@typescript-eslint/strict-boolean-expressions': 'off',
       },
