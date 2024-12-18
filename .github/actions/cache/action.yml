@@ -34,7 +34,7 @@ runs:
     - name: Get cache NODE MODULES dependencies
       id: cache_node_modules
       if: inputs.NODE_MODULES == 'true'
-      uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
+      uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
       with:
         path: ./node_modules
         key: ${{ inputs.PREFIX_CACHE_KEY }}-node_modules-${{ hashFiles('**/package-lock.json') }}
@@ -42,7 +42,7 @@ runs:
     - name: Get cache NPM dependencies
       id: cache_npm
       if: inputs.NPM == 'true' && steps.cache_node_modules.outputs.cache-hit != 'true'
-      uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
+      uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
       with:
         path: |
           ~/.npm
