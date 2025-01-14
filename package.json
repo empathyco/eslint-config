@@ -38,9 +38,9 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --clean --dts && tsup prettier.config.js --format esm",
-    "lint": "eslint --flag unstable_ts_config --fix .",
-    "lint:check": "eslint --flag unstable_ts_config .",
-    "lint:inspect": "eslint --flag unstable_ts_config --inspect-config .",
+    "lint": "eslint --fix .",
+    "lint:check": "eslint .",
+    "lint:inspect": "eslint --inspect-config .",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
