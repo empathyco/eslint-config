@@ -84,7 +84,7 @@ jobs:
 
       - name: Install GH CLI
         if: steps.tag.outputs.name != ''
-        uses: dev-hanz-ops/install-gh-cli-action@8fff9050dae2d81b38f94500d8b74ad1d1d47410 # v0.2.0
+        uses: dev-hanz-ops/install-gh-cli-action@af38ce09b1ec248aeb08eea2b16bbecea9e059f8 # v0.2.1
         with:
           gh-cli-version: 2.49.2
 
