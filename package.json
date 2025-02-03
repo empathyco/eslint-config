@@ -45,7 +45,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@antfu/eslint-config": "3.16.0",
+    "@antfu/eslint-config": "4.1.1",
     "eslint": "9.19.0",
     "prettier": "3.4.2"
   },
