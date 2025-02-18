@@ -38,6 +38,7 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --clean --dts && tsup prettier.config.js --format esm",
+    "test:coverage": "echo 'No tests yet'",
     "lint": "eslint --fix .",
     "lint:check": "eslint .",
     "lint:inspect": "eslint --inspect-config .",

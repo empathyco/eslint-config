@@ -1,4 +1,4 @@
-name: CI
+name: CI - Pull Request
 
 on:
   pull_request:
@@ -8,42 +8,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  frontend-ci-pr:
+    uses: empathyco/platform-reusable-github-actions/.github/workflows/frontend-ci-pr.yml@main
+    secrets: inherit
   ci:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-      pull-requests: write
-    defaults:
-      run:
-        shell: sh
-
+    needs: frontend-ci-pr
+    runs-on: [self-hosted, small]
     steps:
-      - name: Git checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-
-      - name: Set Node version
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
-        with:
-          node-version-file: .nvmrc
-
-      - name: Setup Node cache
-        id: cache
-        uses: ./.github/actions/cache
-        with:
-          PREFIX_CACHE_KEY: ${{ runner.os }}
-          NODE_MODULES: 'true'
-          NPM: 'true'
-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache_node_modules != 'true'
-        run: npm ci
-
-      - name: Prettier
-        run: npm run format:check
-
-      - name: Linter
-        run: npm run lint:check
-
-      - name: Build
-        run: npm run build
+      - run: echo "OK"
