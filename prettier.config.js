@@ -1,9 +1,11 @@
-const config = {
+import { loadPrettierPlugins } from './src/utils/loadPrettierPlugins.js'
+
+export default {
   printWidth: 100,
   singleQuote: true,
   arrowParens: 'avoid',
   semi: false,
-  plugins: ['prettier-plugin-tailwindcss'],
+  plugins: loadPrettierPlugins(),
   overrides: [
     {
       files: '*.svg',
@@ -13,5 +15,3 @@ const config = {
     },
   ],
 }
-
-export default config
