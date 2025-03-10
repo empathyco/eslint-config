@@ -1,6 +1,10 @@
+// @ts-check
 import { loadPrettierPlugins } from './src/utils/loadPrettierPlugins.js'
-
-export default {
+/**
+ * @see https://prettier.io/docs/configuration
+ * @type {import("prettier").Config}
+ */
+const config = {
   printWidth: 100,
   singleQuote: true,
   arrowParens: 'avoid',
@@ -15,3 +19,5 @@ export default {
     },
   ],
 }
+
+export default config
