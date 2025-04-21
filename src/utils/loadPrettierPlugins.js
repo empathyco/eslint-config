@@ -11,9 +11,13 @@ function isTailwindInstalled() {
     if (!existsSync(packageJsonPath)) return false
 
     const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
-    return Boolean(
-      packageJson.dependencies?.tailwindcss || packageJson.devDependencies?.tailwindcss,
-    )
+
+    const deps = {
+      ...(packageJson.dependencies || {}),
+      ...(packageJson.devDependencies || {}),
+    }
+
+    return Boolean(deps.tailwindcss || deps['@nuxtjs/tailwindcss'])
   } catch {
     return false
   }
