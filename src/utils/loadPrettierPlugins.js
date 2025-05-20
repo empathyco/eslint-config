@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import process from 'node:process'
 
@@ -7,13 +7,13 @@ import process from 'node:process'
  */
 function checkPackageJson(path) {
   if (existsSync(path)) {
-    const packageJson = JSON.parse(readFileSync(path, "utf-8"));
+    const packageJson = JSON.parse(readFileSync(path, 'utf-8'))
     const deps = {
-      ...packageJson.dependencies || {},
-      ...packageJson.devDependencies || {}
-    };
-    if (deps.tailwindcss || deps["@nuxtjs/tailwindcss"]) {
-      return true;
+      ...(packageJson.dependencies || {}),
+      ...(packageJson.devDependencies || {}),
+    }
+    if (deps.tailwindcss || deps['@nuxtjs/tailwindcss']) {
+      return true
     }
   }
 }
@@ -24,37 +24,37 @@ function checkPackageJson(path) {
 function isTailwindInstalled() {
   try {
     // Check the root package.json first
-    const rootPackageJsonPath = resolve(process.cwd(), "package.json");
+    const rootPackageJsonPath = resolve(process.cwd(), 'package.json')
 
     if (checkPackageJson(rootPackageJsonPath)) {
-      return true;
+      return true
     }
 
     // Check for a packages directory, which is common in monorepos
-    const packagesDir = resolve(process.cwd(), "packages");
+    const packagesDir = resolve(process.cwd(), 'packages')
 
     if (existsSync(packagesDir)) {
       // Check each package in the packages directory
       try {
         const packages = readdirSync(packagesDir, { withFileTypes: true })
           .filter(dirent => dirent.isDirectory())
-          .map(dirent => dirent.name);
-          
+          .map(dirent => dirent.name)
+
         for (const pkg of packages) {
-          const packageJsonPath = resolve(packagesDir, pkg, "package.json");
+          const packageJsonPath = resolve(packagesDir, pkg, 'package.json')
 
           if (checkPackageJson(packageJsonPath)) {
-            return true;
+            return true
           }
         }
       } catch {
         // If there's an error reading the packages directory, continue
       }
     }
-    
-    return false;
+
+    return false
   } catch {
-    return false;
+    return false
   }
 }
 
