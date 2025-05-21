@@ -1,5 +1,4 @@
 import { existsSync, readFileSync } from 'node:fs'
-
 import fg from 'fast-glob'
 
 /**
@@ -25,7 +24,6 @@ function checkPackageJson(path) {
 async function isTailwindInstalled() {
   try {
     const packageFiles = await fg(['**/package.json', '!**/node_modules/**', '!**/dist/**'])
-
     for (const pkg of packageFiles) {
       if (checkPackageJson(pkg)) {
         return true
