@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs'
-import fg from 'fast-glob'
+import { glob } from 'node:fs/promises'
 
 /**
  * Checks if Tailwind is a dependency in the package.json file.
@@ -23,8 +23,9 @@ function checkPackageJson(path) {
  */
 async function isTailwindInstalled() {
   try {
-    const packageFiles = await fg(['**/package.json', '!**/node_modules/**', '!**/dist/**'])
-    for (const pkg of packageFiles) {
+    for await (const pkg of glob(['**/package.json'], {
+      exclude: ['**/node_modules/**', '**/dist/**'],
+    })) {
       if (checkPackageJson(pkg)) {
         return true
       }
