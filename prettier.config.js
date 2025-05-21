@@ -9,7 +9,7 @@ const config = {
   singleQuote: true,
   arrowParens: 'avoid',
   semi: false,
-  plugins: await loadPrettierPlugins(),
+  plugins: loadPrettierPlugins(),
   overrides: [
     {
       files: '*.svg',

@@ -1,5 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs'
-import { glob } from 'node:fs/promises'
+import { existsSync, globSync, readFileSync } from 'node:fs'
 
 /**
  * Checks if Tailwind is a dependency in the package.json file.
@@ -21,15 +20,14 @@ function checkPackageJson(path) {
 /**
  * Checks if Tailwind is installed in the project's dependencies.
  */
-async function isTailwindInstalled() {
+ function isTailwindInstalled() {
   try {
-    for await (const pkg of glob(['**/package.json'], {
-      exclude: ['**/node_modules/**', '**/dist/**'],
-    })) {
-      if (checkPackageJson(pkg)) {
-        return true
+    const packages = globSync(['**/package.json'], { exclude: ['**/node_modules/**', '**/dist/**']})
+     for (const pkg of packages) {
+        if (checkPackageJson(pkg)) {
+          return true;
+        }
       }
-    }
   } catch {
     return false
   }
@@ -39,9 +37,9 @@ async function isTailwindInstalled() {
 /**
  * Dynamically loads Prettier plugins based on project dependencies.
  */
-export async function loadPrettierPlugins() {
+export function loadPrettierPlugins() {
   const plugins = []
-  if (await isTailwindInstalled()) {
+  if (isTailwindInstalled()) {
     plugins.push('prettier-plugin-tailwindcss')
   }
   return plugins
