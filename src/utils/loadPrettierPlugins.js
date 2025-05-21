@@ -1,4 +1,6 @@
 import { existsSync, globSync, readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+import process from 'node:process'
 
 /**
  * Checks if Tailwind is a dependency in the package.json file.
@@ -24,7 +26,8 @@ function checkPackageJson(path) {
   try {
     const packages = globSync(['**/package.json'], { exclude: ['**/node_modules/**', '**/dist/**']})
      for (const pkg of packages) {
-        if (checkPackageJson(pkg)) {
+      const packageJsonPath = resolve(process.cwd(), pkg)
+        if (checkPackageJson(packageJsonPath)) {
           return true;
         }
       }
