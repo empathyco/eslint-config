@@ -22,15 +22,17 @@ function checkPackageJson(path) {
 /**
  * Checks if Tailwind is installed in the project's dependencies.
  */
- function isTailwindInstalled() {
+function isTailwindInstalled() {
   try {
-    const packages = globSync(['**/package.json'], { exclude: ['**/node_modules/**', '**/dist/**']})
-     for (const pkg of packages) {
+    const packages = globSync(['**/package.json'], {
+      exclude: ['**/node_modules/**', '**/dist/**'],
+    })
+    for (const pkg of packages) {
       const packageJsonPath = resolve(process.cwd(), pkg)
-        if (checkPackageJson(packageJsonPath)) {
-          return true;
-        }
+      if (checkPackageJson(packageJsonPath)) {
+        return true
       }
+    }
   } catch {
     return false
   }
