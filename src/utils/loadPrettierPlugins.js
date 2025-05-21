@@ -16,6 +16,7 @@ function checkPackageJson(path) {
       return true
     }
   }
+  return false
 }
 
 /**
