@@ -1,6 +1,6 @@
-import { existsSync, readdirSync, readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
-import process from 'node:process'
+import { existsSync, readFileSync } from 'node:fs'
+
+import fg from 'fast-glob'
 
 /**
  * Checks if Tailwind is a dependency in the package.json file.
@@ -22,49 +22,27 @@ function checkPackageJson(path) {
 /**
  * Checks if Tailwind is installed in the project's dependencies.
  */
-function isTailwindInstalled() {
+async function isTailwindInstalled() {
   try {
-    // Check the root package.json first
-    const rootPackageJsonPath = resolve(process.cwd(), 'package.json')
+    const packageFiles = await fg(['**/package.json', '!**/node_modules/**', '!**/dist/**'])
 
-    if (checkPackageJson(rootPackageJsonPath)) {
-      return true
-    }
-
-    // Check for a packages directory, which is common in monorepos
-    const packagesDir = resolve(process.cwd(), 'packages')
-
-    if (existsSync(packagesDir)) {
-      // Check each package in the packages directory
-      try {
-        const packages = readdirSync(packagesDir, { withFileTypes: true })
-          .filter(dirent => dirent.isDirectory())
-          .map(dirent => dirent.name)
-
-        for (const pkg of packages) {
-          const packageJsonPath = resolve(packagesDir, pkg, 'package.json')
-
-          if (checkPackageJson(packageJsonPath)) {
-            return true
-          }
-        }
-      } catch {
-        // If there's an error reading the packages directory, continue
+    for (const pkg of packageFiles) {
+      if (checkPackageJson(pkg)) {
+        return true
       }
     }
-
-    return false
   } catch {
     return false
   }
+  return false
 }
 
 /**
  * Dynamically loads Prettier plugins based on project dependencies.
  */
-export function loadPrettierPlugins() {
+export async function loadPrettierPlugins() {
   const plugins = []
-  if (isTailwindInstalled()) {
+  if (await isTailwindInstalled()) {
     plugins.push('prettier-plugin-tailwindcss')
   }
   return plugins
