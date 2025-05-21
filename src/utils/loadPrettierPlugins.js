@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import process from 'node:process'
-import { globSync } from 'tinyglobby';
+import { globSync } from 'tinyglobby'
 
 /**
  * Checks if Tailwind is a dependency in the package.json file.
