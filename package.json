@@ -45,15 +45,15 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@antfu/eslint-config": "4.12.0",
-    "eslint": "9.26.0",
+    "@antfu/eslint-config": "4.13.2",
+    "eslint": "9.27.0",
     "prettier": "3.5.3",
     "prettier-plugin-tailwindcss": "0.6.11",
     "tinyglobby": "0.2.13"
   },
   "devDependencies": {
     "jiti": "2.4.2",
-    "tsup": "8.4.0",
+    "tsup": "8.5.0",
     "typescript": "5.8.3"
   }
 }
