@@ -45,11 +45,11 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@antfu/eslint-config": "4.13.2",
-    "eslint": "9.27.0",
+    "@antfu/eslint-config": "4.14.1",
+    "eslint": "9.29.0",
     "prettier": "3.5.3",
-    "prettier-plugin-tailwindcss": "0.6.11",
-    "tinyglobby": "0.2.13"
+    "prettier-plugin-tailwindcss": "0.6.12",
+    "tinyglobby": "0.2.14"
   },
   "devDependencies": {
     "jiti": "2.4.2",
