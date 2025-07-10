@@ -46,7 +46,7 @@ function isTailwindInstalled() {
 export function loadPrettierPlugins() {
   const plugins = []
   if (isTailwindInstalled()) {
-    plugins.push('prettier-plugin-tailwindcss')
+    plugins.push(import('prettier-plugin-tailwindcss'))
   }
   return plugins
 }
