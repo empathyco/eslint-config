@@ -1,8 +1,12 @@
+import type { Linter } from 'eslint'
 import antfu from '@antfu/eslint-config'
 
 type AntfuParams = Parameters<typeof antfu>
 
-export async function empathyco(options: AntfuParams[0] = {}, ...userConfigs: AntfuParams[1][]) {
+export async function empathyco(
+  options: AntfuParams[0] = {},
+  ...userConfigs: AntfuParams[1][]
+): Promise<Linter.Config[]> {
   return antfu(
     {
       stylistic: false, // Disable https://eslint.style,
