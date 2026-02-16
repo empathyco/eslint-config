@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@antfu/eslint-config": "7.4.3",
-    "eslint": "9.39.2",
+    "eslint": "10.0.0",
     "prettier": "3.8.1",
     "prettier-plugin-tailwindcss": "0.7.2",
     "tinyglobby": "0.2.15"
