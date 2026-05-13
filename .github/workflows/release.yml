@@ -19,7 +19,7 @@ jobs:
         shell: sh
 
     steps:
-      - name: Generate a token
+      - name: Generate a GH token
         id: app-token
         uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2
         with:
@@ -37,14 +37,8 @@ jobs:
         uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
           node-version-file: .nvmrc
-
-      - name: Setup Node cache
-        id: cache
-        uses: ./.github/actions/cache
-        with:
-          PREFIX_CACHE_KEY: ${{ runner.os }}
-          NODE_MODULES: 'true'
-          NPM: 'true'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
 
       - name: Increment and set new version
         id: increment
@@ -99,13 +93,6 @@ jobs:
         run: gh release create ${{steps.tag.outputs.name}} --generate-notes --notes-start-tag $(git tag -l "v*.*.*" | sort -V | tail -2 | head -1)
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-
-      - name: Configure NPM auth
-        run: |
-          npm config set registry="https://registry.npmjs.org/"
-          npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
 
       - name: Publish package
         run: npm publish --access public
